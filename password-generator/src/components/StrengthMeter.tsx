@@ -23,6 +23,16 @@ function StrengthMeter() {
 
     return Math.min(strength, 4); // Max strength level is 4
   }
+  /*
+  Too Weak (1):
+  Less than 8 characters, or no uppercase, numbers, or special characters.
+  Weak (2):
+  Length >= 8, and at least 1 condition (uppercase, number, or special character).
+  Medium (3):
+  Length >= 8, and at least 2 conditions (uppercase, number, or special character).
+  Strong (4):
+  Length >= 8, and all 3 conditions (uppercase, number, and special character).
+  */
 
   // Update strength and label dynamically based on password
   useEffect(() => {
@@ -49,17 +59,11 @@ function StrengthMeter() {
     }
   }, [password]); // Re-run effect when password changes
 
-  // Color mapping for the strength levels
-  const strengthColors = [
-    "bg-red-500",   // For Too Weak (1 red bar)
-    "bg-orange-500", // For Weak (2 orange bars)
-    "bg-yellow-500", // For Medium (3 yellow bars)
-    "bg-green-500",  // For Strong (4 green bars)
-  ];
-
   return (
     <div className="bg-very-dark-gray px-4 py-3.5 flex items-center justify-between w-full mt-8">
-      <p className="text-base uppercase text-gray font-bold md:text-lg">Strength</p>
+      <p className="text-base uppercase text-gray font-bold md:text-lg">
+        Strength
+      </p>
       <div className="flex items-center gap-4">
         {/* Dynamic Strength Label */}
         <p className="text-lg text-almost-white uppercase font-bold md:text-2xl">
@@ -67,16 +71,39 @@ function StrengthMeter() {
         </p>
         {/* Always 4 bars, dynamic colors based on strength */}
         <div className="flex items-center gap-1">
-          {[1, 2, 3, 4].map((level) => (
-            <span
-              key={level}
-              className={`w-2.5 h-7 ${
-                level <= strength
-                  ? strengthColors[level - 1] // Apply color to the filled bars based on strength
-                  : "bg-transparent border-2 border-almost-white" // Empty bars with border (unfilled)
-              }`}
-            ></span>
-          ))}
+          {[1, 2, 3, 4].map((level) => {
+            let backgroundColor = "transparent"; // Default background color
+            let borderColor = "#D1D5DB"; // Default border color (white)
+
+            // Set the color based on the strength level
+            if (level <= strength) {
+              if (strength === 1) {
+                backgroundColor = "red"; // Red for the first bar when strength = 1
+              } else if (strength === 2) {
+                backgroundColor = "orange"; // Orange for the first two bars when strength = 2
+              } else if (strength === 3) {
+                backgroundColor = "yellow"; // Yellow for the first three bars when strength = 3
+              } else if (strength === 4) {
+                backgroundColor = "green"; // Green for all bars when strength = 4
+              }
+            } else {
+              // Border color for the empty bars
+              borderColor = "#D1D5DB"; // White border for empty bars
+            }
+
+            return (
+              <span
+                key={level}
+                style={{
+                  width: "0.625rem", // w-2.5
+                  height: "1.75rem", // h-7
+                  backgroundColor: backgroundColor, // Dynamic color for the bar
+                  border:
+                    level > strength ? `2px solid ${borderColor}` : "none", // Border for empty bars
+                }}
+              ></span>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -84,13 +111,3 @@ function StrengthMeter() {
 }
 
 export default StrengthMeter;
-
-
-// Too Weak (1):
-// Less than 8 characters, or no uppercase, numbers, or special characters.
-// Weak (2):
-// Length >= 8, and at least 1 condition (uppercase, number, or special character).
-// Medium (3):
-// Length >= 8, and at least 2 conditions (uppercase, number, or special character).
-// Strong (4):
-// Length >= 8, and all 3 conditions (uppercase, number, and special character).
