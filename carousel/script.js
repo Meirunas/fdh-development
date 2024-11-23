@@ -10,9 +10,6 @@ const nextBtn = document.querySelector('.next-btn');
 
 // Function to update the carousel display order dynamically
 function updateCarousel() {
-    // Clear the carousel container
-    carousel.innerHTML = '';
-
     // Append items back in the correct order
     items.forEach((item) => {
         carousel.appendChild(item);
