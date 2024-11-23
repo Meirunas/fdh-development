@@ -36,7 +36,8 @@ body {
 }
 
 .carousel-item img {
-    max-height: 300px;
+    max-width: 50%; /* Ensure images scale correctly */
+    height: auto;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -66,4 +67,45 @@ button {
 
 button:hover {
     background: #333;
+}
+
+/* Media queries for responsiveness */
+
+/* For tablets and smaller screens */
+@media (max-width: 768px) {
+    .carousel-container {
+        width: 90%;
+        max-width: 600px;
+    }
+
+    .carousel-item img {
+        max-height: 200px;
+    }
+
+    button {
+        width: 35px;
+        height: 35px; 
+    }
+}
+
+/* For phones and smaller devices */
+@media (max-width: 480px) {
+    .carousel-container {
+        width: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    .carousel-item {
+        padding: 15px;
+    }
+
+    .carousel-item img {
+        max-height: 150px; 
+    }
+
+    button {
+        width: 30px;
+        height: 30px; 
+    }
 }
