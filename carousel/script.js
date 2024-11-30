@@ -36,3 +36,4 @@ nextBtn.addEventListener('click', () => {
     updateCarousel();
 });
 
+
