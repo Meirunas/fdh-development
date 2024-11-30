@@ -36,5 +36,3 @@ nextBtn.addEventListener('click', () => {
     updateCarousel();
 });
 
-// Initialize the carousel display on page load
-updateCarousel();
