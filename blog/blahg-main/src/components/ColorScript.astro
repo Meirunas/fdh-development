@@ -1,24 +1,39 @@
 <script is:inline>
-	let colors = ["#24d05a", "#eb4888", "#10a2f5", "#e9bc3f"];
+    // Define colors for categories
+    const categoryColors = {
+        personal: "blue",
+        technical: "green",
+    };
 
-	function getRandomColor() {
-		return colors[Math.floor(Math.random() * colors.length)];
-	}
+    // Function to determine category and set color
+    function setCategoryLinkColors() {
+        Array.from(document.querySelectorAll("a.tag")).forEach((e) => {
+            const href = e.getAttribute("href"); // Get the href attribute
+            if (href.includes("/tag/personal")) {
+                e.style.textDecorationColor = categoryColors.personal; // Apply 'personal' color
+            } else if (href.includes("/tag/technical")) {
+                e.style.textDecorationColor = categoryColors.technical; // Apply 'technical' color
+            } else {
+                e.style.textDecorationColor = "black"; // Default color for unknown categories
+            }
+        });
+    }
 
-	function setRandomLinkColor() {
-		Array.from(document.getElementsByTagName("a")).forEach((e) => {
-			e.style.textDecorationColor = getRandomColor();
-		});
-	}
+    // Optional: Hover effect for tags
+    function setHoverListeners() {
+        Array.from(document.querySelectorAll("a.tag")).forEach((e) => {
+            e.addEventListener("mouseover", () => {
+                e.style.color = "darkgray"; // Example hover effect
+            });
+            e.addEventListener("mouseout", () => {
+                e.style.color = ""; // Revert hover effect
+            });
+        });
+    }
 
-	function setColorHoverListener() {
-		Array.from(document.querySelectorAll("a, button")).forEach((e) => {
-			e.addEventListener("mouseover", setRandomLinkColor);
-		});
-	}
-
-	(function () {
-		setRandomLinkColor();
-		setColorHoverListener();
-	})();
+    // Immediately set colors on page load
+    (function () {
+        setCategoryLinkColors();
+        setHoverListeners();
+    })();
 </script>
